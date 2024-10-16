@@ -36,9 +36,9 @@ public class PlayerMovement : MonoBehaviour
             playerRB.velocity = new Vector2(-Speed, playerRB.velocity.y);
             playerSprite.flipX = true;
         }
-        else
+        else if (isGrounded)
         {
-            playerRB.velocity = new Vector2(0.0f, playerRB.velocity.y);
+            playerRB.velocity = new Vector2(playerRB.velocity.x * 0.9f, playerRB.velocity.y);
         }
 
         if (isGrounded && Input.GetKey(KeyCode.Space))

@@ -12,13 +12,7 @@ public class SpawnOnClick : MonoBehaviour
         {
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             GameObject newObject = Instantiate(SpawnObject, (Vector2)worldPos, Quaternion.identity);
-
-            // Activate rigidbody physics if present
-            Rigidbody2D rigidBody = newObject.GetComponent<Rigidbody2D>();
-            if (rigidBody != null)
-            {
-                rigidBody.simulated = true;  
-            }
+            newObject.SetActive(true);
         }   
     }
 }
