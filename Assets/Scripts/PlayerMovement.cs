@@ -6,13 +6,14 @@ public class PlayerMovement : MonoBehaviour
 {
     public float Speed;
     public float JumpStrength;
+    public Vector2 RespawnPoint;
 
     private Rigidbody2D playerRB;
     private Collider2D playerCollider;
     private SpriteRenderer playerSprite;
     private Animator playerAnimator;
 
-    private bool isGrounded;
+    public bool isGrounded;
 
     void Start()
     {
@@ -24,35 +25,41 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        playerAnimator.SetBool("Running", isGrounded && playerRB.velocity.magnitude > 0.001f);
+        playerAnimator.SetBool("Running", isGrounded && playerRB.velocity.magnitude > 0.01f);
         playerAnimator.SetBool("Is Grounded", isGrounded);
     }
 
     void FixedUpdate()
     {
-        /*
-         * Temporary movement because eventually we want the character to move 
-         * forward on their own while the player places objects in front of them.
-         */
-        if (Input.GetKey(KeyCode.D))
+        // if (Input.GetKey(KeyCode.D))
+        // {
+        //     playerRB.velocity = new Vector2(Speed, playerRB.velocity.y);
+        //     playerSprite.flipX = false;
+        // }
+        // else if (Input.GetKey(KeyCode.A))
+        // {
+        //     playerRB.velocity = new Vector2(-Speed, playerRB.velocity.y);
+        //     playerSprite.flipX = true;
+        // }
+        // else if (isGrounded)
+        // {
+        //     playerRB.velocity = new Vector2(playerRB.velocity.x * 0.75f, playerRB.velocity.y);
+        // }
+
+        // if (isGrounded && Input.GetKey(KeyCode.Space))
+        // {
+        //     playerRB.velocity = new Vector2(playerRB.velocity.x, JumpStrength);
+        // }
+        
+        if (isGrounded)
         {
             playerRB.velocity = new Vector2(Speed, playerRB.velocity.y);
-            playerSprite.flipX = false;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            playerRB.velocity = new Vector2(-Speed, playerRB.velocity.y);
-            playerSprite.flipX = true;
-        }
-        else if (isGrounded)
-        {
-            playerRB.velocity = new Vector2(playerRB.velocity.x * 0.9f, playerRB.velocity.y);
         }
 
-        if (isGrounded && Input.GetKey(KeyCode.Space))
+        if (transform.position.y < -10.0f)
         {
-            playerRB.velocity = new Vector2(playerRB.velocity.x, JumpStrength);
-        }
+            transform.position = new Vector3(RespawnPoint.x, RespawnPoint.y);
+        }        
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -66,6 +73,9 @@ public class PlayerMovement : MonoBehaviour
                 Physics2D.IgnoreCollision(playerCollider, collision.collider);
                 playerRB.velocity = new Vector2(playerRB.velocity.x, JumpStrength * 2.0f);
                 Destroy(collision.gameObject);
+                break;
+            case "Flag":
+                transform.position = new Vector3(RespawnPoint.x, RespawnPoint.y);
                 break;
         }
     }

@@ -32,14 +32,14 @@ public class BombBehavior : MonoBehaviour
                 Vector2 direction = new Vector2(obj.transform.position.x - gameObject.transform.position.x,
                                                 obj.transform.position.y - gameObject.transform.position.y);
                 
-                float magnitude = (float)Math.Clamp(ExplosionPower - 0.1 * Math.Pow(Math.Sqrt(direction.x * direction.x + direction.y * direction.y), 2.0), 0.0, ExplosionPower);
+                float distance = (float)Math.Sqrt(direction.x * direction.x + direction.y * direction.y);
 
                 direction.Normalize();
 
                 Rigidbody2D objectRB = obj.GetComponent<Rigidbody2D>();
-                if (objectRB != null)
+                if (objectRB != null && distance < 5.0f)
                 {
-                    objectRB.velocity += direction * magnitude;
+                    objectRB.velocity += direction * ExplosionPower;
                 }
             }
         }
