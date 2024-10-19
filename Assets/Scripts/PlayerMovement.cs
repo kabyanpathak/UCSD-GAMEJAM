@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D playerRB;
     private Collider2D playerCollider;
     private SpriteRenderer playerSprite;
+    private Animator playerAnimator;
 
     private bool isGrounded;
 
@@ -18,6 +19,13 @@ public class PlayerMovement : MonoBehaviour
         playerRB = gameObject.GetComponent<Rigidbody2D>();
         playerCollider = gameObject.GetComponent<Collider2D>();
         playerSprite = gameObject.GetComponent<SpriteRenderer>();
+        playerAnimator = gameObject.GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        playerAnimator.SetBool("Running", isGrounded && playerRB.velocity.magnitude > 0.001f);
+        playerAnimator.SetBool("Is Grounded", isGrounded);
     }
 
     void FixedUpdate()
