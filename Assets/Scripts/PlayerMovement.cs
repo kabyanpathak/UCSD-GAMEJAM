@@ -77,6 +77,9 @@ public class PlayerMovement : MonoBehaviour
             case "Flag":
                 transform.position = new Vector3(RespawnPoint.x, RespawnPoint.y);
                 break;
+            case "Ramp":
+                playerRB.velocity += new Vector2(8.0f, 8.0f);
+                break;
         }
     }
 

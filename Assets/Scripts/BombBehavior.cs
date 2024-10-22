@@ -7,7 +7,8 @@ public class BombBehavior : MonoBehaviour
 {
     // 1 second = 50 timer ticks
     public int Timer;
-    public int ExplosionPower;
+    public float Power;
+    public float Range;
     public Sprite ExplosionSprite;
     
     private GameObject explosionObject;
@@ -37,9 +38,9 @@ public class BombBehavior : MonoBehaviour
                 direction.Normalize();
 
                 Rigidbody2D objectRB = obj.GetComponent<Rigidbody2D>();
-                if (objectRB != null && distance < 5.0f)
+                if (objectRB != null && distance < Range)
                 {
-                    objectRB.velocity += direction * ExplosionPower;
+                    objectRB.velocity += direction * Power;
                 }
             }
         }
