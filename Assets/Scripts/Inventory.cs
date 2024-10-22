@@ -12,6 +12,9 @@ public class Inventory : MonoBehaviour
     
     public Image[] itemIcons = new Image[5];
     public Image[] itemSlotBackgrounds = new Image[5];
+
+    public Sprite itemSlotBackgroundSprite;
+    public Sprite itemSlotBackgroundSpriteSelected;
     public Sprite emptySlotSprite;
 
     public int ItemSpawnRate;
@@ -64,6 +67,18 @@ public class Inventory : MonoBehaviour
             else
             {
                 itemIcons[i].sprite = emptySlotSprite;
+            }
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (i == selectedItem)
+            {
+                itemSlotBackgrounds[i].sprite = itemSlotBackgroundSpriteSelected;
+            }
+            else
+            {
+                itemSlotBackgrounds[i].sprite = itemSlotBackgroundSprite;
             }
         }
     }
